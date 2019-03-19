@@ -1,26 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="40" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="3">
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="40" height="10" tilewidth="16" tileheight="16" infinite="0" nextobjectid="3">
  <tileset firstgid="1" name="landscape-tileset" tilewidth="16" tileheight="16" tilecount="165" columns="15">
   <properties>
    <property name="collides" type="bool" value="true"/>
   </properties>
-  <image source="../../2D-phaser-game-master/assets/landscape-tileset.png" width="240" height="176"/>
+  <image source="landscape-tileset.png" width="240" height="176"/>
+  <tile id="0">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
   <tile id="1">
    <properties>
     <property name="collides" type="bool" value="true"/>
    </properties>
    <objectgroup draworder="index">
     <object id="1" x="0" y="16">
+     <properties>
+      <property name="collides" type="bool" value="true"/>
+     </properties>
      <polygon points="0,0 0,-16 16,-16 16,0"/>
     </object>
    </objectgroup>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="15">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="collides" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="30">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="31">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="32">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="36">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="41">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="42">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="43">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="68">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="69">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="70">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="83">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="85">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="98">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="99">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="100">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
   </tile>
  </tileset>
  <tileset firstgid="166" name="spike" tilewidth="16" tileheight="16" tilecount="1" columns="1">
   <image source="spike.png" width="16" height="16"/>
   <tile id="0">
    <properties>
-    <property name="collides" value="true"/>
+    <property name="collides" type="bool" value="true"/>
    </properties>
    <objectgroup draworder="index">
     <object id="1" x="0" y="16">
@@ -38,7 +141,7 @@
  <tileset firstgid="169" name="skies" tilewidth="16" tileheight="16" tilecount="10" columns="2">
   <image source="skies.png" width="32" height="80"/>
  </tileset>
- <layer id="4" name="backgroundLayer" width="40" height="10">
+ <layer name="backgroundLayer" width="40" height="10">
   <data encoding="csv">
 0,169,169,169,169,169,169,169,169,169,169,169,169,169,169,169,169,169,126,141,126,141,126,66,126,169,169,169,169,169,169,169,169,169,169,169,169,169,169,169,
 0,169,169,169,169,169,169,169,169,169,169,169,169,169,169,169,169,0,66,126,126,126,126,126,126,169,169,169,169,169,169,169,169,169,169,169,169,169,169,169,
@@ -52,7 +155,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="2" name="collideLayer" width="40" height="10">
+ <layer name="collideLayer" width="40" height="10">
   <properties>
    <property name="collides" type="bool" value="true"/>
   </properties>
@@ -69,7 +172,7 @@
 17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17
 </data>
  </layer>
- <layer id="5" name="foregroundLayer" width="40" height="10">
+ <layer name="foregroundLayer" width="40" height="10">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -83,7 +186,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="3" name="spikeLayer" width="40" height="10">
+ <layer name="spikeLayer" width="40" height="10">
   <properties>
    <property name="collides" value="true"/>
   </properties>
@@ -100,7 +203,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="6" name="objectLayer">
+ <objectgroup name="objectLayer">
   <object id="1" name="playerSpawn" type="player" x="35" y="88">
    <point/>
   </object>
