@@ -26,6 +26,7 @@ class BaseScene extends Phaser.Scene {
     };
     create() {
         const map = this.make.tilemap({ key: this.tileDataKey });
+        console.log(map);
         const landscapeTileset = map.addTilesetImage('landscape-tileset');
         const spikeTileset = map.addTilesetImage('spike');
         const skiesTileset = map.addTilesetImage('skies');
@@ -34,11 +35,12 @@ class BaseScene extends Phaser.Scene {
         this.foreground = map.createStaticLayer('foregroundLayer', landscapeTileset, 0, 0);
         this.spikes = map.createStaticLayer('spikeLayer', spikeTileset, 0, 0);
         //collision
-        this.collideLayer.setCollisionBetween(0, 1000);
+        //this.collideLayer.setCollisionBetween(0, 1000);
         this.collideLayer.setCollisionByProperty({collides:true});
-        this.spikes.setCollisionByProperty({collides:true});
-        //this.matter.world.convertTilemapLayer(this.collideLayer);
-        this.matter.world.convertTilemapLayer(this.spikes);
+        this.spikes.setCollisionByProperty({ collides: true });
+        console.log(this.collideLayer);
+        const myLand = this.matter.world.convertTilemapLayer(this.collideLayer);
+        const mySpikes = this.matter.world.convertTilemapLayer(this.spikes);
         this.flag = this.matter.add.sprite(608, 96, 'flag');
         this.flag.setStatic(true);
         this.flag.label = 'flag';
@@ -47,8 +49,8 @@ class BaseScene extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.matter.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.cameras.main.startFollow(this.player.sprite,false,0.5,0.5);   
-        this.matter.world.on('collisionstart', this.handleCollision, this);
-        this.matter.world.on('collisionactive', this.handleCollision, this);
+        //this.matter.world.on('collisionstart', this.handleCollision, this);
+       // this.matter.world.on('collisionactive', this.handleCollision, this);
 
     }
     handleCollision(event) {

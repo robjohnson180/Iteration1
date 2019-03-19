@@ -109,6 +109,7 @@ class Player {
                 y: 0
             })*/
             this.sprite.x += speed;
+            this.sprite.y -= 0.8;
         } else if (this.moveLeft) {
             //this.sprite.anims.play('run', true);
             this.sprite.setFlipX(true);
@@ -117,6 +118,7 @@ class Player {
                 y: 0
             })*/
             this.sprite.x -= speed;
+            this.sprite.y -= 0.8;
         }
         else {
             //this.sprite.anims.play('idle', true);
