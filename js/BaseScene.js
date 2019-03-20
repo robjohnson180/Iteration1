@@ -36,24 +36,36 @@ class BaseScene extends Phaser.Scene {
         this.spikes = map.createStaticLayer('spikeLayer', spikeTileset, 0, 0);
         //collision
         //this.collideLayer.setCollisionBetween(0, 1000);
-        this.collideLayer.setCollisionByProperty({collides:true});
+        this.collideLayer.setCollisionByProperty({ collides: true });
         this.spikes.setCollisionByProperty({ collides: true });
+        this.spikes.label = 'spike';
         console.log(this.collideLayer);
         const myLand = this.matter.world.convertTilemapLayer(this.collideLayer);
         const mySpikes = this.matter.world.convertTilemapLayer(this.spikes);
         this.flag = this.matter.add.sprite(608, 96, 'flag');
         this.flag.setStatic(true);
         this.flag.label = 'flag';
-        this.player = new Player(this, 200, 0); //TODO Get from tiled
+        //Saves
+        this.saves = new Save(this, 20, 20);
+        this.saves.label = 'saves';
+        //Player
+        this.playerSpawn = map.findObject('objectLayer', (object) => { if (object.name == 'playerSpawn') { return object } });
+        this.player = new Player(this, this.playerSpawn.x, this.playerSpawn.y); //TODO Get from tiled
+        this.player.label = 'player';
         //this.player.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+
+
+
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.matter.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-        this.cameras.main.startFollow(this.player.sprite,false,0.5,0.5);   
-        //this.matter.world.on('collisionstart', this.handleCollision, this);
-       // this.matter.world.on('collisionactive', this.handleCollision, this);
+        this.cameras.main.startFollow(this.player.sprite, false, 0.5, 0.5);
+        this.matter.world.on('collisionstart', this.handleCollision, this);
+        this.matter.world.on('collisionactive', this.handleCollision, this);
+
 
     }
     handleCollision(event) {
+
         event.pairs.forEach(this.matchCollisionPair, this);
     }
 
@@ -63,22 +75,44 @@ class BaseScene extends Phaser.Scene {
         var playerObj = null;
         let myPair = [null, null];
         if (bodyA.gameObject && bodyA.gameObject.label) {
+
             this.sortCollisionObjects(bodyA.gameObject.label, myPair);
         }
         if (bodyB.gameObject && bodyB.gameObject.label) {
+            console.log(bodyB.gameObject);
+            //console.log(bodyA.gameObject);
+            //this.player.freeze();
+            if (bodyA.gameObject.tile && bodyA.gameObject.tile.layer.name == 'spikeLayer') {
+                myPair[1] = 'spike';
+                console.log(myPair);
+            }
             this.sortCollisionObjects(bodyB.gameObject.label, myPair);
         }
         if (myPair[0] == 'player' && myPair[1] == 'flag') {
+
             this.changeScene();
+        }
+        if (myPair[0] == 'player' && myPair[1] == 'spike') {
+            this.killPlayer();
+        }
+        if (myPair[0] == 'player' && myPair[1] == 'saves') {
+            this.savePlayerPosition(/*currentSave*/);
         }
     }
     sortCollisionObjects(label, arr) {
+        console.log(label);
         switch (label) {
             case 'player':
                 arr[0] = 'player';
                 break
             case 'flag':
                 arr[1] = 'flag';
+                break
+            case 'spike':
+                arr[1] = 'spike';
+                break
+            case 'saves':
+                arr[1] = 'saves';
                 break
         }
     }
@@ -89,11 +123,22 @@ class BaseScene extends Phaser.Scene {
 
     }
     changeScene() {
+        console.log(this.id);
         switch (this.id) {
-            case 'TutScene':
+            case 'tutScene':
+                console.log('change scene');
                 this.scene.start('sceneA');
                 break
         }
+    }
+    killPlayer() {
+        console.log('die');
+        //set player to last spawn point
+    }
+    savePlayerPosition(/*currentSave*/) {
+        console.log('save')
+        //this.saves
+        //set player respawn point to save object
     }
 
 }
