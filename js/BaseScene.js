@@ -26,7 +26,7 @@ class BaseScene extends Phaser.Scene {
     };
     create() {
         const map = this.make.tilemap({ key: this.tileDataKey });
-        console.log(map);
+        //console.log(map);
         const landscapeTileset = map.addTilesetImage('landscape-tileset');
         const spikeTileset = map.addTilesetImage('spike');
         const skiesTileset = map.addTilesetImage('skies');
@@ -39,7 +39,7 @@ class BaseScene extends Phaser.Scene {
         this.collideLayer.setCollisionByProperty({ collides: true });
         this.spikes.setCollisionByProperty({ collides: true });
         this.spikes.label = 'spike';
-        console.log(this.collideLayer);
+       // console.log(this.collideLayer);
         const myLand = this.matter.world.convertTilemapLayer(this.collideLayer);
         const mySpikes = this.matter.world.convertTilemapLayer(this.spikes);
         this.flag = this.matter.add.sprite(608, 96, 'flag');
@@ -47,7 +47,7 @@ class BaseScene extends Phaser.Scene {
         this.flag.label = 'flag';
         //Saves
         this.saves = new Save(this, 20, 20);
-        this.saves.label = 'saves';
+        this.saves.sprite.label = 'saves';
         //Player
         this.playerSpawn = map.findObject('objectLayer', (object) => { if (object.name == 'playerSpawn') { return object } });
         this.player = new Player(this, this.playerSpawn.x, this.playerSpawn.y); //TODO Get from tiled
@@ -79,12 +79,12 @@ class BaseScene extends Phaser.Scene {
             this.sortCollisionObjects(bodyA.gameObject.label, myPair);
         }
         if (bodyB.gameObject && bodyB.gameObject.label) {
-            console.log(bodyB.gameObject);
+          //  console.log(bodyB.gameObject);
             //console.log(bodyA.gameObject);
             //this.player.freeze();
             if (bodyA.gameObject.tile && bodyA.gameObject.tile.layer.name == 'spikeLayer') {
-                myPair[1] = 'spike';
-                console.log(myPair);
+                myPair[2] = 'spike';
+                //console.log(myPair);
             }
             this.sortCollisionObjects(bodyB.gameObject.label, myPair);
         }
@@ -92,15 +92,15 @@ class BaseScene extends Phaser.Scene {
 
             this.changeScene();
         }
-        if (myPair[0] == 'player' && myPair[1] == 'spike') {
+        if (myPair[0] == 'player' && myPair[2] == 'spike') {
             this.killPlayer();
         }
-        if (myPair[0] == 'player' && myPair[1] == 'saves') {
+        if (myPair[0] == 'player' && myPair[3] == 'saves') {
             this.savePlayerPosition(/*currentSave*/);
         }
     }
     sortCollisionObjects(label, arr) {
-        console.log(label);
+       // console.log(label);
         switch (label) {
             case 'player':
                 arr[0] = 'player';
@@ -109,10 +109,10 @@ class BaseScene extends Phaser.Scene {
                 arr[1] = 'flag';
                 break
             case 'spike':
-                arr[1] = 'spike';
+                arr[2] = 'spike';
                 break
             case 'saves':
-                arr[1] = 'saves';
+                arr[3] = 'saves';
                 break
         }
     }
@@ -133,10 +133,14 @@ class BaseScene extends Phaser.Scene {
     }
     killPlayer() {
         console.log('die');
+        this.player.sprite.x = this.player.sprite.spawnPoint[0];
+        this.player.sprite.y = this.player.sprite.spawnPoint[1];
         //set player to last spawn point
     }
     savePlayerPosition(/*currentSave*/) {
-        console.log('save')
+        console.log('save');
+        this.player.sprite.spawnPoint = [this.saves.sprite.x, this.saves.sprite.y];
+        console.log(this.player.sprite.spawnPoint);
         //this.saves
         //set player respawn point to save object
     }

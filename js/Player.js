@@ -59,6 +59,7 @@ class Player {
             });*/
         
         this.sprite.label = 'player';
+        this.sprite.spawnPoint = [x,y];
         //this.sprite.setStatic(true);
         //TODO mobile input
         const testButton = scene.add.text(80, 140, 'Right', { fill: '#0f0' });

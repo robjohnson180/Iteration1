@@ -29,7 +29,10 @@ var config = {
             resize();
         }
     },
-    pixelArt: false
+    input: {
+        activePointers: 2
+    },
+    pixelArt: true
 }
 
 var game = new Phaser.Game(config);
